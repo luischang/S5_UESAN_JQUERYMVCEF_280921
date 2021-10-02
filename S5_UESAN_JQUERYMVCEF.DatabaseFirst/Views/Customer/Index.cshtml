@@ -12,6 +12,68 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mantenimiento de Clientes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <input type="text" class="form-control" id="txtNombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control" id="txtApellido" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>País</label>
+                                <input type="text" class="form-control" id="txtPais" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Ciudad</label>
+                                <input type="text" class="form-control" id="txtCiudad" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="text" class="form-control" id="txtTelefono" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hidIdCliente" value="-1" />
 
 <div id="divListadoClientes">
 
@@ -19,6 +81,55 @@
 
 <script>
 
+    
+    $("#btnAgregarCliente").click(function () {
+        $("#modalRegistroCliente").modal();
+    });
+
+
+
+    $("#btnGuardarCliente").click(function () {
+        let vIdCliente = $("#hidIdCliente").val();
+        let vNombre = $("#txtNombre").val();
+        let vApellido = $("#txtApellido").val();
+        let vPais = $("#txtPais").val();
+        let vCiudad = $("#txtCiudad").val();
+        let vTelefono = $("#txtTelefono").val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Grabar","Customer")',
+            cache: false,
+            data: {
+                idCliente: vIdCliente,
+                nombre: vNombre,
+                apellido: vApellido,
+                pais: vPais,
+                ciudad: vCiudad,
+                telefono: vTelefono
+            },
+            success: function (exito) {
+                if (exito) {
+                    alert("Se registró correctamente....");
+                    CargarListadoCliente();
+                } else {
+                    alert("A ocurrido un error en la transacción");
+                }
+
+            }, error: function () {
+                alert("A ocurrido un error en el servidor");
+            }
+        });
+
+
+
+
+    });
+
+
+
+
+    CargarListadoCliente();
     function CargarListadoCliente() {
         $.ajax({
             type: "GET",
@@ -26,7 +137,7 @@
             cache: false,
             success: function (dataHTML) {
                 $("#divListadoClientes").html(dataHTML);
-            }        
+            }
         });
 
     }

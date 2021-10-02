@@ -1,0 +1,40 @@
+﻿
+@model IEnumerable<Customer>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var item in Model)
+         {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.City</td>
+            <td>@item.Country</td>
+            <td>@item.Phone</td>
+            <td>
+                <button data-id="@item.Id" 
+                        class="btnEditarCliente btn btn-warning">
+                    Editar
+                </button>
+            </td>
+            <td>
+                <button data-id="@item.Id"
+                        class="btnEliminarCliente btn btn-danger">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+         }
+    </tbody>
+</table>
