@@ -1,7 +1,7 @@
 ﻿
 @model IEnumerable<Customer>
 
-<table class="table table-striped">
+<table id="tbListadoCliente" class="table table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -16,29 +16,47 @@
         </tr>
     </thead>
     <tbody>
-         @foreach (var item in Model)
-         {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.FirstName</td>
-            <td>@item.LastName</td>
-            <td>@item.City</td>
-            <td>@item.Country</td>
-            <td>@item.Phone</td>
-            <td>@item.Order.Count()</td>
-            <td>
-                <button data-id="@item.Id" 
-                        class="btnEditarCliente btn btn-warning">
-                    Editar
-                </button>
-            </td>
-            <td>
-                <button data-id="@item.Id"
-                        class="btnEliminarCliente btn btn-danger">
-                    Eliminar
-                </button>
-            </td>
-        </tr>
-         }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.City</td>
+                <td>@item.Country</td>
+                <td>@item.Phone</td>
+                <td>@item.Order.Count()</td>
+                <td>
+                    <button data-id="@item.Id"
+                            class="btnEditarCliente btn btn-warning">
+                        Editar
+                    </button>
+                </td>
+                <td>
+                    <button data-id="@item.Id"
+                            class="btnEliminarCliente btn btn-danger">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<script>
+    loadDataTable();
+
+    function loadDataTable() {
+        let table = $("#tbListadoCliente").DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis', 'print']
+
+        });
+
+        table.buttons().container()
+            .insertBefore("#tbListadoCliente_filter");
+    }
+
+
+</script>
