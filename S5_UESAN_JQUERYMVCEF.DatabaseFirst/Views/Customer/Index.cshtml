@@ -81,6 +81,53 @@
 
 <script>
 
+    $("#divListadoClientes").on('click', '.btnEliminarCliente', function () {
+        let vIdCliente = $(this).attr('data-id');
+
+        if (confirm("¿Está seguro de eliminar al cliente?")) {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Eliminar","Customer")',
+                cache: false,
+                data: { idCliente: vIdCliente },
+                success: function (exito) {
+                    if (exito) {
+                        CargarListadoCliente();
+                    } else {
+                        alert("Ocurrió un problema al eliminar el cliente....");
+                    }
+                }
+            });
+
+
+        }
+
+
+    });
+
+
+    $("#divListadoClientes").on('click', '.btnEditarCliente', function () {
+        let vIdCliente = $(this).attr('data-id');
+        $("#hidIdCliente").val(vIdCliente);
+        let modalRegistro = $("#modalRegistroCliente");
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Obtener","Customer")',
+            cache: false,
+            data: { idCliente: vIdCliente },
+            success: function (objCliente) {
+                $("#txtNombre").val(objCliente.firstName);
+                $("#txtApellido").val(objCliente.lastName);
+                $("#txtPais").val(objCliente.country);
+                $("#txtCiudad").val(objCliente.city);
+                $("#txtTelefono").val(objCliente.phone);
+                modalRegistro.modal();
+            }
+        });
+    });
+
     
     $("#btnAgregarCliente").click(function () {
         $("#modalRegistroCliente").modal();
@@ -112,6 +159,7 @@
                 if (exito) {
                     alert("Se registró correctamente....");
                     CargarListadoCliente();
+                    $("#modalRegistroCliente").modal("toggle");
                 } else {
                     alert("A ocurrido un error en la transacción");
                 }

@@ -26,7 +26,7 @@ namespace S5_UESAN_JQUERYMVCEF.DatabaseFirst.Repository
         public static async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
             using var data = new SalesDBContext();
-            var customers = await data.Customer.ToListAsync();
+            var customers = await data.Customer.Include(x=>x.Order).ToListAsync();
             return customers;
         }
 

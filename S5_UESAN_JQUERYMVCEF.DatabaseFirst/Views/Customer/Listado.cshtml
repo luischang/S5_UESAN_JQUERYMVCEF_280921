@@ -10,6 +10,9 @@
             <th>Ciudad</th>
             <th>Pais</th>
             <th>Teléfono</th>
+            <th>Órdenes</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +25,7 @@
             <td>@item.City</td>
             <td>@item.Country</td>
             <td>@item.Phone</td>
+            <td>@item.Order.Count()</td>
             <td>
                 <button data-id="@item.Id" 
                         class="btnEditarCliente btn btn-warning">
