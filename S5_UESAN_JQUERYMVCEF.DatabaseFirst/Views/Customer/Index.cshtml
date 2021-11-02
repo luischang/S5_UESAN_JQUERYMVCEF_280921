@@ -23,7 +23,7 @@
                 </button>
             </div>
             <div class="modal-body">
-             
+
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
@@ -81,6 +81,15 @@
 
 <script>
 
+    function ClearControls() {
+        $("#txtNombre").val("");
+        $("#txtApellido").val("");
+        $("#txtPais").val("");
+        $("#txtCiudad").val("");
+        $("#txtTelefono").val("");
+        $("#hidIdCliente").val(-1);
+    }
+
     $("#divListadoClientes").on('click', '.btnEliminarCliente', function () {
         let vIdCliente = $(this).attr('data-id');
 
@@ -94,6 +103,7 @@
                 success: function (exito) {
                     if (exito) {
                         CargarListadoCliente();
+                        ClearControls();
                     } else {
                         alert("Ocurrió un problema al eliminar el cliente....");
                     }
@@ -128,8 +138,9 @@
         });
     });
 
-    
+
     $("#btnAgregarCliente").click(function () {
+        ClearControls();
         $("#modalRegistroCliente").modal();
     });
 
@@ -160,6 +171,7 @@
                     alert("Se registró correctamente....");
                     CargarListadoCliente();
                     $("#modalRegistroCliente").modal("toggle");
+                    ClearControls();
                 } else {
                     alert("A ocurrido un error en la transacción");
                 }
